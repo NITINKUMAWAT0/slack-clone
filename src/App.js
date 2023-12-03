@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 function App() {
   return (
     <div className="App">
-      <h1>hello bhailog </h1>
+      <h1>Slack Clone</h1>
       <Header/>
       
       <div className="app-body">
