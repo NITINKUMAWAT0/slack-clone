@@ -5,7 +5,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import InsertCommentIcon from "@mui/icons-material/InsertCommentOutlined";
 import SidebarOptions from './SidebarOptions/SidebarOptions';
 import InboxIcon from "@mui/icons-material/Inbox";
-import DraftsIcons from "@mui/icons-material/Drafts";
+import DraftsIcon from "@mui/icons-material/Drafts"; 
 import BookmarkBorderIcon from "@mui/icons-material/Bookmark";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
@@ -13,25 +13,21 @@ import AppsIcon from "@mui/icons-material/Apps";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
-import  db from '../../firebase';
+import DB from '../../fireabse';
 
-const Sidebar = () => {
+function Sidebar() {
+  const [channels, setChannels] = useState([]);
 
-//   const [channels, setChannels] = useState([]);
-
-//   useEffect(() => {
-//     const unsubscribe = db.collection('rooms').onSnapshot((snapshot) => {
-//       setChannels(
-//         snapshot.docs.map((doc) => ({
-//           id: doc.id,
-//           name: doc.data().name,
-//         }))
-//       );
-//     });
-
-    // Return a cleanup function to prevent memory leaks
-//     return unsubscribe;
-//   }, []);
+  // useEffect(() => {
+  //    DB.collection('rooms').onSnapshot(snapshot => {
+  //     setChannels(
+  //       snapshot.docs.map(doc => ({
+  //         id: doc.id,
+  //         name: doc.data().name
+  //       }))
+  //     );
+  //   }); 
+  // }, []); 
 
   return (
     <div className="sidebar">
@@ -48,7 +44,7 @@ const Sidebar = () => {
 
       <SidebarOptions Icon={InsertCommentIcon} title="Threads" />
       <SidebarOptions Icon={InboxIcon} title="Mentions and reactions" />
-      <SidebarOptions Icon={DraftsIcons} title="Saved items" />
+      <SidebarOptions Icon={DraftsIcon} title="Saved items" />
       <SidebarOptions Icon={BookmarkBorderIcon} title="Channel browser" />
       <SidebarOptions Icon={PeopleAltIcon} title="People & user groups" />
       <SidebarOptions Icon={AppsIcon} title="Apps" />
@@ -63,11 +59,11 @@ const Sidebar = () => {
 
       <SidebarOptions Icon={AddIcon} title="Add channels" />
 
-      {/* {channels.map((channel) => (
-        <SidebarOptions key={channel.id} title={channel.name} id={channel.id} />
-      ))} */}
+      {channels.map(channel => (
+        <SidebarOptions title={channel.name} id={channel.id} />
+      ))}
     </div>
   );
-};
+}
 
 export default Sidebar;
