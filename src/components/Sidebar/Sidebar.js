@@ -16,18 +16,52 @@ import AddIcon from "@mui/icons-material/Add";
 import DB from '../../fireabse';
 
 function Sidebar() {
-  const [channels, setChannels] = useState([]);
 
-  // useEffect(() => {
-  //    DB.collection('rooms').onSnapshot(snapshot => {
-  //     setChannels(
-  //       snapshot.docs.map(doc => ({
-  //         id: doc.id,
-  //         name: doc.data().name
-  //       }))
-  //     );
-  //   }); 
-  // }, []); 
+    // useEffect(() => {
+    //   console.log("Fetching channels...");
+    //   DB.collection('rooms').onSnapshot(snapshot => {
+    //     console.log("Snapshot received:", snapshot);
+    //     setChannels(
+    //       snapshot.docs.map(doc => ({
+    //         id: doc.id,
+    //         name: doc.data().name
+    //       }))
+    //     );
+    //   }); 
+    // }, []); 
+    const [channels, setChannels] = useState([]);
+
+    useEffect(() => {
+      console.log("Fetching channels...");
+    
+      // Add a check for DB to avoid null/undefined errors
+      if (DB) {
+        const unsubscribe = DB.collection('rooms').onSnapshot(
+          snapshot => {
+            console.log("Snapshot received:", snapshot);
+        
+            setChannels(
+              snapshot.docs.map(doc => ({
+                id: doc.id,
+                name: doc.data().name
+              }))
+            );
+          },
+          error => {
+            console.error("Error fetching channels:", error);
+          }
+        );
+        
+    
+        // Cleanup the listener when the component unmounts
+        return () => unsubscribe();
+      } else {
+        console.error("DB object is null or undefined.");
+      }
+    }, []);
+    
+    console.log("DB object:", DB);
+
 
   return (
     <div className="sidebar">
